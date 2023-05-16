@@ -4,12 +4,48 @@ let infowindow;
 let map;
 
 //Lat and longitude when clicked
-let clickedLat, clickedLin;
+let clickedLat, clickedLng;
+
+var map_icon_green = new google.maps.MarkerImage(
+  "http://mysite.com/green_pointer.png",
+  new google.maps.Size(12, 20),
+  new google.maps.Point(0, 0)
+);
+
+var map_icon_blue = new google.maps.MarkerImage(
+  "http://mysite.com/blue_pointer.png",
+  new google.maps.Size(12, 20),
+  new google.maps.Point(0, 0)
+);
+
+var map_icon_yellow = new google.maps.MarkerImage(
+  "http://mysite.com/yellow_pointer.png",
+  new google.maps.Size(12, 20),
+  new google.maps.Point(0, 0)
+);
+
+var map_icon_red = new google.maps.MarkerImage(
+  "http://mysite.com/red_pointer.png",
+  new google.maps.Size(12, 20),
+  new google.maps.Point(0, 0)
+);
+
+var map_icon_shadow = new google.maps.MarkerImage(
+  "http://mysite.com/shadow.png",
+  new google.maps.Size(28, 20),
+  new google.maps.Point(-6, 0)
+);
+
+var map_crosshair = new google.maps.MarkerImage(
+  "http://mysite.com/cross-hair.gif",
+  new google.maps.Size(17, 17),
+  new google.maps.Point(0, 0)
+);
 
 async function initMap() {
   // The map, centered at Uluru
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 11,
+    zoom: 10,
     center: {
       lat: 40.72,
       lng: -73.96,
@@ -38,7 +74,15 @@ async function initMap() {
 
   //Gets the lat and Long from a click event
   map.addListener("click", (mapsMouseEvent) => {
-    console.log(mapsMouseEvent.latLng.toJSON());
+    const latlon = mapsMouseEvent.latLng.toJSON();
+    clickedLat = latlon.lat;
+    clickedLng = latlon.lng;
+
+    console.log(clickedLat, clickedLng);
+
+    var point = new google.maps.LatLng(clickedLat, clickedLng);
+
+    marker = map_create_marker(point, `Hello`, map_icon_blue);
   });
 }
 
@@ -47,13 +91,7 @@ window.initMap = initMap;
 initMap();
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation."
-  );
-  infoWindow.open(map);
+  console.log(`Hasn't got access to users location`);
 }
 
 function lookupLocation(location) {
@@ -136,3 +174,22 @@ clickME.addEventListener(`click`, function () {
   // findMultipleLocations();
   findLocationByAddress(text);
 });
+
+function map_create_marker(point, html, icon) {
+  var marker = new google.maps.Marker({
+    position: point,
+    map: map,
+    icon: icon,
+    shadow: map_icon_shadow,
+  });
+
+  if (html != "") {
+    var infowindow = new google.maps.InfoWindow({
+      content: html,
+    });
+    google.maps.event.addListener(marker, "click", function () {
+      infowindow.open(map, marker);
+    });
+  }
+  return marker;
+}
