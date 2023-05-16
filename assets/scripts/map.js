@@ -2,27 +2,25 @@
 let geocoder;
 let infowindow;
 let map;
-let gMap;
 async function initMap() {
   // The location of Uluru
   const position = { lat: -25.344, lng: 131.031 };
   // Request needed libraries.
   //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
   // The map, centered at Uluru
-  map = new Map(document.getElementById("map"), {
-    zoom: 4,
-    center: position,
-    mapId: "ChIJdd4hrwug2EcRmSrV3Vo6llI",
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 8,
+    center: {
+      lat: 40.72,
+      lng: -73.96,
+    },
   });
 
   // The marker, positioned at Uluru
-  const marker = new AdvancedMarkerElement({
-    map: map,
+  const marker = new google.maps.marker({
     position: position,
-    title: "London",
+    map: map,
   });
 }
 
@@ -40,33 +38,6 @@ function lookupLocation(location) {
     .then((result) => getPlaceId(result));
 }
 
-function getPlaceId(result) {
-  console.log(result);
-  var placeId = result.predictions[0].place_id;
-  geocodePlaceId(placeId);
-}
-
-function geocodePlaceId(placeId) {
-  geocoder
-    .geocode({
-      placeId: placeId,
-    })
-    .then(({ results }) => {
-      if (results[0]) {
-        map.setZoom(11);
-        map.setCenter(results[0].geometry.location);
-        const marker = new google.maps.Marker({
-          map,
-          position: results[0].geometry.location,
-        });
-        infowindow.setContent(results[0].formatted_address);
-        infowindow.open(map, marker);
-      } else {
-        window.alert("No results found");
-      }
-    })
-    .catch((e) => window.alert("Geocoder failed due to: " + e));
-}
 window.initMap = initMap;
 
 function findLocationByLatLng(latlng) {
@@ -124,9 +95,11 @@ function parseText(text) {
 
 const clickME = document.querySelector(`#searchButton`);
 clickME.addEventListener(`click`, function () {
-  console.log(`HELLO`);
+  const inputSection = document.querySelector(`input`);
+  const text = inputSection.value;
+  if (!text) return;
   // findMultipleLocations();
-  findLocationByAddress();
+  findLocationByAddress(text);
 });
 
 function findMultipleLocations() {
@@ -138,7 +111,7 @@ function findMultipleLocations() {
 
 function findLocationByAddress(place) {
   fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=london&key=${key}`
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
   )
     .then((response) => response.json())
     .then(function (result) {
