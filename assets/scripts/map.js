@@ -1,50 +1,60 @@
 // Initialize the map.
 let geocoder;
 let infowindow;
-let map;
+let gMap;
 
 //Lat and longitude when clicked
 let clickedLat, clickedLng;
 
-var map_icon_green = new google.maps.MarkerImage(
-  "http://mysite.com/green_pointer.png",
-  new google.maps.Size(12, 20),
-  new google.maps.Point(0, 0)
-);
+let map_icon_green,
+  map_icon_blue,
+  map_icon_red,
+  map_icon_shadow,
+  map_icon_yellow,
+  map_crosshair;
 
-var map_icon_blue = new google.maps.MarkerImage(
-  "http://mysite.com/blue_pointer.png",
-  new google.maps.Size(12, 20),
-  new google.maps.Point(0, 0)
-);
+async function initMarkers() {
+  map_icon_green = await new google.maps.MarkerImage(
+    "http://mysite.com/green_pointer.png",
+    new google.maps.Size(12, 20),
+    new google.maps.Point(0, 0)
+  );
 
-var map_icon_yellow = new google.maps.MarkerImage(
-  "http://mysite.com/yellow_pointer.png",
-  new google.maps.Size(12, 20),
-  new google.maps.Point(0, 0)
-);
+  map_icon_blue = await new google.maps.MarkerImage(
+    "http://mysite.com/blue_pointer.png",
+    new google.maps.Size(12, 20),
+    new google.maps.Point(0, 0)
+  );
 
-var map_icon_red = new google.maps.MarkerImage(
-  "http://mysite.com/red_pointer.png",
-  new google.maps.Size(12, 20),
-  new google.maps.Point(0, 0)
-);
+  map_icon_yellow = await new google.maps.MarkerImage(
+    "http://mysite.com/yellow_pointer.png",
+    new google.maps.Size(12, 20),
+    new google.maps.Point(0, 0)
+  );
 
-var map_icon_shadow = new google.maps.MarkerImage(
-  "http://mysite.com/shadow.png",
-  new google.maps.Size(28, 20),
-  new google.maps.Point(-6, 0)
-);
+  map_icon_red = await new google.maps.MarkerImage(
+    "http://mysite.com/red_pointer.png",
+    new google.maps.Size(12, 20),
+    new google.maps.Point(0, 0)
+  );
 
-var map_crosshair = new google.maps.MarkerImage(
-  "http://mysite.com/cross-hair.gif",
-  new google.maps.Size(17, 17),
-  new google.maps.Point(0, 0)
-);
+  map_icon_shadow = await new google.maps.MarkerImage(
+    "http://mysite.com/shadow.png",
+    new google.maps.Size(28, 20),
+    new google.maps.Point(-6, 0)
+  );
+
+  map_crosshair = await new google.maps.MarkerImage(
+    "http://mysite.com/cross-hair.gif",
+    new google.maps.Size(17, 17),
+    new google.maps.Point(0, 0)
+  );
+}
+initMarkers();
 
 async function initMap() {
   // The map, centered at Uluru
-  map = new google.maps.Map(document.getElementById("map"), {
+  gMap = new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
     center: {
       lat: 40.72,
@@ -59,7 +69,7 @@ async function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        map.setCenter(pos);
+        gMap.setCenter(pos);
       },
       () => {
         handleLocationError(true, infoWindow, map.getCenter());
@@ -73,23 +83,22 @@ async function initMap() {
   // Configure the click listener.
 
   //Gets the lat and Long from a click event
-  map.addListener("click", (mapsMouseEvent) => {
+  gMap.addListener("click", (mapsMouseEvent) => {
     const latlon = mapsMouseEvent.latLng.toJSON();
     clickedLat = latlon.lat;
     clickedLng = latlon.lng;
 
     console.log(clickedLat, clickedLng);
 
-    var point = new google.maps.LatLng(clickedLat, clickedLng);
+    const point = new google.maps.LatLng(clickedLat, clickedLng);
 
-    marker = map_create_marker(point, `Hello`, map_icon_blue);
+    marker = map_create_marker(point, `Hello`, map_icon_green);
   });
 }
 
 window.initMap = initMap;
 
 initMap();
-
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   console.log(`Hasn't got access to users location`);
 }
@@ -123,7 +132,6 @@ function findLocationByAddress(place) {
     .then((response) => response.json())
     .then(function (result) {
       if (!(result.status === "OK")) return;
-      gMap = new google.maps.Map(document.getElementById("map"));
       console.log(result.results[0].geometry.location);
       const markerOptions = new google.maps.Marker({
         clickable: true,
@@ -176,15 +184,15 @@ clickME.addEventListener(`click`, function () {
 });
 
 function map_create_marker(point, html, icon) {
-  var marker = new google.maps.Marker({
+  const marker = new google.maps.Marker({
     position: point,
-    map: map,
+    map: gMap,
     icon: icon,
     shadow: map_icon_shadow,
   });
 
   if (html != "") {
-    var infowindow = new google.maps.InfoWindow({
+    const infowindow = new google.maps.InfoWindow({
       content: html,
     });
     google.maps.event.addListener(marker, "click", function () {
