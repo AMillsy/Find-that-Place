@@ -140,7 +140,10 @@ function findLocationByAddress(place) {
         position: result.results[0].geometry.location,
         title: "You are here",
         visible: true,
-        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+        },
       });
       gMap.setCenter(result.results[0].geometry.location);
       gMap.setZoom(13);
