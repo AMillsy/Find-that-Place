@@ -119,7 +119,7 @@ async function initMap() {
 
     const point = new google.maps.LatLng(clickedLat, clickedLng);
 
-    marker = map_create_marker(point, `Hello`);
+    marker = map_create_marker(point, locationName);
 
     let pubObj;
 
@@ -230,6 +230,10 @@ function map_create_marker(point, html) {
   const marker = new google.maps.Marker({
     position: point,
     map: gMap,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 5,
+    },
   });
 
   if (html != "") {
