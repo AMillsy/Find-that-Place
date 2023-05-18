@@ -54,7 +54,7 @@ initMarkers();
 
 async function initMap() {
   // The map, centered at Uluru
-  gMap = new google.maps.Map(document.getElementById("map"), {
+  gMap = await new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
     center: {
       lat: 40.72,
