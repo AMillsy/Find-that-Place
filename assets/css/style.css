@@ -45,3 +45,8 @@ ul {
 .hide {
   display: none;
 }
+@media screen{
+     max-width: 900px 
+     min-width: 600px 
+     min-width: 1100px
+}
