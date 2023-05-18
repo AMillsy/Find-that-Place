@@ -53,6 +53,8 @@ let clickedLat, clickedLng;
 
 async function initMap() {
   // The map, centered at Uluru
+  new google.maps.places.Autocomplete(document.getElementById(`location`));
+
   gMap = await new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
     center: {
@@ -119,7 +121,7 @@ async function initMap() {
 
     const point = new google.maps.LatLng(clickedLat, clickedLng);
 
-    marker = map_create_marker(point, locationName);
+    marker = map_create_marker(point, locationName, false);
 
     let pubObj;
 
@@ -174,15 +176,7 @@ function findLocationByAddress(pubName, place) {
     .then((response) => response.json())
     .then(function (result) {
       if (!(result.status === "OK")) return;
-      console.log(result.results[0].geometry.location);
-      const markerOptions = new google.maps.Marker({
-        clickable: true,
-        flat: true,
-        map: gMap,
-        position: result.results[0].geometry.location,
-        title: pubName,
-        visible: true,
-      });
+      map_create_marker(result.results[0].geometry.location, pubName);
       gMap.setCenter(result.results[0].geometry.location);
       gMap.setZoom(13);
     });
@@ -224,15 +218,23 @@ searchBtn.addEventListener(`click`, function () {
   findLocationByAddress(text);
 });
 
-function map_create_marker(point, html) {
-  const marker = new google.maps.Marker({
-    position: point,
-    map: gMap,
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 5,
-    },
-  });
+function map_create_marker(point, html, isPub = true) {
+  let marker;
+  if (!isPub) {
+    marker = new google.maps.Marker({
+      position: point,
+      map: gMap,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 5,
+      },
+    });
+  } else {
+    marker = new google.maps.Marker({
+      position: point,
+      map: gMap,
+    });
+  }
 
   if (html != "") {
     const infowindow = new google.maps.InfoWindow({
