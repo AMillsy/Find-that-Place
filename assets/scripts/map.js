@@ -208,8 +208,9 @@ function findLocationByLatLng(latlng) {
 
 //EVENT HANDLER
 
-const searchBtn = document.querySelector(`#searchBtn`);
-searchBtn.addEventListener(`click`, function () {
+const searchForm = document.querySelector(`#search-section`);
+searchForm.addEventListener(`submit`, function (e) {
+  e.preventDefault();
   console.log(`hello`);
   const inputSection = document.querySelector(`input`);
   const text = inputSection.value;
