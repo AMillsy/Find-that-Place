@@ -61,6 +61,7 @@ async function initMap() {
     },
   });
 
+  gecoder = new google.maps.Geocoder();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -86,12 +87,58 @@ async function initMap() {
     const latlon = mapsMouseEvent.latLng.toJSON();
     clickedLat = latlon.lat;
     clickedLng = latlon.lng;
+    let locationName;
+    //GET AREA NAME WHEN CLICKING
+    new google.maps.Geocoder().geocode(
+      {
+        location: mapsMouseEvent.latLng,
+      },
+      (results, status) => {
+        if (status === "OK") {
+          if (results && results.length) {
+            var filtered_array = results.filter((result) =>
+              result.types.includes("locality")
+            );
+            var addressResult = filtered_array.length
+              ? filtered_array[0]
+              : results[0];
 
-    console.log(clickedLat, clickedLng);
+            if (addressResult.address_components) {
+              addressResult.address_components.forEach((component) => {
+                if (component.types.includes("locality")) {
+                  locationName = component.long_name;
+                }
+              });
+            }
+          }
+        }
+      }
+    );
+
+    ////
 
     const point = new google.maps.LatLng(clickedLat, clickedLng);
 
     marker = map_create_marker(point, `Hello`);
+
+    let pubObj;
+
+    getAnswerFromChatGPT(
+      `Can you give me a list of good pubs at latitude ${clickedLat} and longitude ${clickedLng} and a description of those pubs, separated by colons?`
+    )
+      .then((answer) => {
+        // Perform additional operations with the answer
+        pubObj = parseText(answer);
+
+        pubObj.pubNames.forEach(function (pubName) {
+          findLocationByAddress(pubName, locationName);
+        });
+        //PREFORM PAGE TRANSFORM
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle the error appropriately
+      });
   });
 }
 
@@ -119,9 +166,10 @@ function findMultipleLocations() {
 }
 
 //FINDS LOCATION BY ADDRESS NAME
-function findLocationByAddress(place) {
+function findLocationByAddress(pubName, place) {
+  console.log(pubName);
   fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${pubName},${place}&key=${key}`
   )
     .then((response) => response.json())
     .then(function (result) {
@@ -132,17 +180,15 @@ function findLocationByAddress(place) {
         flat: true,
         map: gMap,
         position: result.results[0].geometry.location,
-        title: "You are here",
+        title: pubName,
         visible: true,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-        },
       });
       gMap.setCenter(result.results[0].geometry.location);
       gMap.setZoom(13);
     });
 }
+
+findLocationByAddress("");
 
 //FINDS LOCATION BY LATITUDE AND LONGITUDE
 function findLocationByLatLng(latlng) {

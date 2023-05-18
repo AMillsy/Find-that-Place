@@ -9,7 +9,7 @@ function getAnswerFromChatGPT(question) {
       model: "text-davinci-003",
       prompt: question,
       temperature: 0.5,
-      max_tokens: 500,
+      max_tokens: 1200,
       top_p: 1.0,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
@@ -32,18 +32,13 @@ function parseText(text) {
   const takeFrontSection = [];
   const description = [];
   filteredAnswer.forEach(function (section) {
-    if (section.includes(`-`)) {
-      takeFrontSection.push(section.split(`-`)[0]);
-      description.push(section.split(`-`)[1]);
-    } else {
-      takeFrontSection.push(section.split(`:`)[0]);
-      description.push(section.split(`:`)[1]);
-    }
+    takeFrontSection.push(section.split(`:`)[0]);
+    description.push(section.split(`:`)[1]);
   });
 
   const placesName = [];
   takeFrontSection.forEach(function (listitem) {
-    placesName.push(listitem.split(`.`)[1].trimStart());
+    placesName.push(listitem.split(`.`)[1]);
   });
 
   return {
