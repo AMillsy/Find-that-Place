@@ -1,3 +1,4 @@
+
 function getAnswerFromChatGPT(question) {
     return fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
@@ -105,3 +106,12 @@ getAnswerFromChatGPT(`Can you give me a list of good pubs at latitude ${lat} and
       console.error('Error:', error);
       // Handle the error appropriately
     });
+=======
+async function getAnswerFromChatGPT(question) {
+    const response = await fetch('https://api.openai.com/v1/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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'
+        },
+

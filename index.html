@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-<script src="./assets/scripts/keys.js"></script>
-<script src="./assets/scripts/script.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unleashed</title>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-Av0kS8QAYgzV2dOHJXomDn8rxTcsRA&callback=initMap&v=weekly"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body>
+    <main>
+      <aside>
+        <header>
+          <h1>UNLEASHED</h1>
+        </header>
+
+        <div class="search-bar">
+          <input
+            type="text"
+            id="location"
+            placeholder="Please Enter Location"
+          />
+          <button class="" id="searchBtn">Search</button>
+        </div>
+
+        <h2>PUBS</h2>
+        <ul id="pubs">
+          <!--  List for example of how it will look -->
+          <ul class>
+            Pub 1: Wetherspoons
+
+            <button>✅</button>
+          </ul>
+          <ul class>
+            Pub 2: Wetherspoons
+            <button>✅</button>
+          </ul>
+        </ul>
+      </aside>
+      <div id="map"></div>
+    </main>
+
+    <script src="./assets/scripts/keys.js"></script>
+    <script src="./assets/scripts/map.js"></script>
+    <script src="./assets/scripts/script.js"></script>
+  </body>
 </html>
+
+
