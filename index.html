@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unleashed</title>
+    <link rel = stylesheet href ="assets/css/reset.css">
+    <link rel = stylesheet href="assets/css/style.css">
+    <main>
+      </head>
+      <body>
+       <aside>
+             <header>
+                 <h1>Unleashed</h1>
+             </header>
 
-    <title>Google Maps</title>
-  </head>
+         <div class="search-bar">
+             <input type="text" id="location" placeholder="Please Enter Location">
+             <button class id="searchBtn">Search</button>
+         </div>
 
-  <body>
-    <style>
-      #map {
-        height: 90%;
-      }
+         <h2>Pubs</h2>
+         <ul id="pubs">
+            <!--  List for example of how it will look -->
+            <ul class>Pub 1: Wetherspoons
+                
+                <button>✅</button> </ul>
+            <ul class>Pub 2: Wetherspoons
+                <button>✅</button></ul>
+            
+         </ul>
 
-      /*
-        * Optional: Makes the sample page fill the window.
-        */
-
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+        </aside>
+    </main>
     <div id="map"></div>
 
-    <input type="text" id="searchText" name="q" placeholder="Search..." />
-    <button id="searchButton">CLICK ME</button>
-    <script
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script
       async
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-Av0kS8QAYgzV2dOHJXomDn8rxTcsRA&callback=initMap&v=weekly"
@@ -38,5 +46,8 @@
     <script src="./assets/scripts/keys.js"></script>
     <script src="./assets/scripts/map.js"></script>
     <script src="./assets/scripts/script.js"></script>
-  </body>
+
+</body>
 </html>
+
+
