@@ -7,10 +7,13 @@
 }
 h1 {
   font-family: "Courier New", Courier, monospace;
+  color: #000;
 }
+
 body {
   background-color: var(--vdark);
 }
+
 main {
   display: flex;
 }
@@ -28,6 +31,9 @@ aside {
 }
 h2 {
   font-family: "Courier New", Courier, monospace;
+
+  color: #000;
+=======
 }
 ul {
   text-align: left;
@@ -39,10 +45,17 @@ ul {
 #pubs {
   padding: 0px;
   text-align: left;
+  color: #000;
 }
 
 .hide {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+ 
+}
+
 }
 
 #map {
@@ -51,3 +64,4 @@ ul {
   height: 95vh;
   border: black solid 2px;
 }
+
