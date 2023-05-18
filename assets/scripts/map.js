@@ -188,8 +188,6 @@ function findLocationByAddress(pubName, place) {
     });
 }
 
-findLocationByAddress("");
-
 //FINDS LOCATION BY LATITUDE AND LONGITUDE
 function findLocationByLatLng(latlng) {
   fetch(
