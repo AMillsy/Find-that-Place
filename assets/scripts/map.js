@@ -95,10 +95,6 @@ async function initMap() {
   });
 }
 
-initMap();
-window.initMap = initMap;
-// initMarkers();
-
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   console.log(`Hasn't got access to users location`);
 }
@@ -200,3 +196,7 @@ function map_create_marker(point, html) {
   }
   return marker;
 }
+
+initMap();
+window.initMap = initMap;
+// initMarkers();
