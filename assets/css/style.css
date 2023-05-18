@@ -13,6 +13,10 @@ h1 {
 body {
   background-color: var(--vdark);
 }
+
+main {
+  display: flex;
+}
 aside {
   color: white;
   margin-right: 20px;
@@ -27,7 +31,9 @@ aside {
 }
 h2 {
   font-family: "Courier New", Courier, monospace;
+
   color: #000;
+=======
 }
 ul {
   text-align: left;
@@ -45,8 +51,17 @@ ul {
 .hide {
   display: none;
 }
+
 @media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
-  }
+ 
 }
+
+}
+
+#map {
+  margin: 5px;
+  width: 80vw;
+  height: 95vh;
+  border: black solid 2px;
+}
+
