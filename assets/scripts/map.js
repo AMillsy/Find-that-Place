@@ -98,10 +98,10 @@ async function initMap() {
       (results, status) => {
         if (status === "OK") {
           if (results && results.length) {
-            var filtered_array = results.filter((result) =>
+            const filtered_array = results.filter((result) =>
               result.types.includes("locality")
             );
-            var addressResult = filtered_array.length
+            const addressResult = filtered_array.length
               ? filtered_array[0]
               : results[0];
 
@@ -133,7 +133,12 @@ async function initMap() {
         pubObj = parseText(answer);
 
         pubObj.pubNames.forEach(function (pubName) {
-          findLocationByAddress(pubName, locationName);
+          const request = {
+            query: pubName,
+            fields: ["name", "geometry", "formatted_address", "photos"],
+          };
+
+          findPlace(request, pubName);
         });
         //PREFORM PAGE TRANSFORM
       })
@@ -178,7 +183,7 @@ function findLocationByAddress(pubName, place) {
       if (!(result.status === "OK")) return;
       map_create_marker(result.results[0].geometry.location, pubName);
       gMap.setCenter(result.results[0].geometry.location);
-      gMap.setZoom(13);
+      gMap.setZoom(11);
     });
 }
 
@@ -251,3 +256,19 @@ function map_create_marker(point, html, isPub = true) {
 initMap();
 window.initMap = initMap;
 // initMarkers();
+
+async function findPlace(request, pubName) {
+  const service = new google.maps.places.PlacesService(gMap);
+
+  service.findPlaceFromQuery(request, function (results, status) {
+    console.log(results);
+
+    const imgURL = results[0].photos[0].getUrl();
+    const lat = results[0].geometry.location.lat();
+    const lng = results[0].geometry.location.lng();
+    const position = new google.maps.LatLng(lat, lng);
+    map_create_marker(position, pubName, true);
+    console.log(lat, lng);
+    console.log(imgURL);
+  });
+}
