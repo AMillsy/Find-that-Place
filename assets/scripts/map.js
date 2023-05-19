@@ -153,64 +153,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   console.log(`Hasn't got access to users location`);
 }
 
-function lookupLocation(location) {
-  var requestOptions = {
-    method: "GET",
-    mode: "no-cors",
-  };
-  fetch(
-    `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${location}&types=establishment&location=37.76999%2C-122.44696&radius=500&key=A${key}`
-  )
-    .then((response) => response.json())
-    .then((result) => getPlaceId(result));
-}
-
-function findMultipleLocations() {
-  locations = [`5,2`, `7,3`];
-  locations.forEach(function (latlng) {
-    findLocationByLatLng(latlng);
-  });
-}
-
-//FINDS LOCATION BY ADDRESS NAME
-function findLocationByAddress(pubName, place) {
-  console.log(pubName);
-  fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${pubName},${place}&key=${key}`
-  )
-    .then((response) => response.json())
-    .then(function (result) {
-      if (!(result.status === "OK")) return;
-      map_create_marker(result.results[0].geometry.location, pubName);
-      gMap.setCenter(result.results[0].geometry.location);
-      gMap.setZoom(11);
-    });
-}
-
-//FINDS LOCATION BY LATITUDE AND LONGITUDE
-function findLocationByLatLng(latlng) {
-  fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${key}`
-  )
-    .then((response) => response.json())
-    .then(function (result) {
-      if (!(result.status === "OK")) return;
-      gMap = new google.maps.Map(document.getElementById("map"));
-      console.log(result.results[0].geometry.location);
-      const markerOptions = new google.maps.Marker({
-        clickable: true,
-        flat: true,
-        map: gMap,
-        position: result.results[0].geometry.location,
-        title: "You are here",
-        visible: true,
-        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-      });
-      gMap.setCenter(result.results[0].geometry.location);
-      gMap.setZoom(13);
-    });
-}
-
 //EVENT HANDLER
 
 const searchForm = document.querySelector(`#search-section`);
