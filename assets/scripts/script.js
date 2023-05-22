@@ -35,7 +35,7 @@ function getClickedLocation(mapsMouseEvent) {
   const latlon = mapsMouseEvent.latLng.toJSON();
   clickedLat = latlon.lat;
   clickedLng = latlon.lng;
-  let locationName;
+  let locationName = "";
   //GET AREA NAME WHEN CLICKING
   new google.maps.Geocoder().geocode(
     {
@@ -54,7 +54,10 @@ function getClickedLocation(mapsMouseEvent) {
           if (addressResult.address_components) {
             addressResult.address_components.forEach((component) => {
               if (component.types.includes("locality")) {
+                console.log("Found Locality");
                 locationName = component.long_name;
+                console.log(component);
+                findResults([clickedLat, clickedLng], locationName);
               }
             });
           }
@@ -62,15 +65,16 @@ function getClickedLocation(mapsMouseEvent) {
       }
     }
   );
+}
 
-  const point = new google.maps.LatLng(clickedLat, clickedLng);
+function findResults([lat, lng], locationName) {
+  const point = new google.maps.LatLng(lat, lng);
 
   marker = map_create_marker(point, locationName, false);
-
   let pubObj;
 
   getAnswerFromChatGPT(
-    `Can you give me a list of good pubs at latitude ${clickedLat} and longitude ${clickedLng} and a description of those pubs, separated by colons?`
+    `Can you give me a list of good pubs in ${locationName} and a description of those pubs, separated by colons?`
   )
     .then((answer) => {
       // Perform additional operations with the answer
