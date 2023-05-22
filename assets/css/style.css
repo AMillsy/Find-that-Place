@@ -123,3 +123,7 @@ ul {
 .text-container {
   background-color: white;
 }
+
+li {
+  list-style-type: none;
+}

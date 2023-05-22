@@ -1,32 +1,26 @@
-function hidemap() {
-  function on() {
-    document.getElementById("overlay").style.display = "block";
-  }
+const recentSearch = document.querySelector(`#recentPlaces`);
+let recentLocation = [];
 
-  function off() {
-    document.getElementById("overlay").style.display = "none";
+function init() {
+  recentLocations = localStorage.getItem(`recentLocations`);
+  if (!recentLocations) {
+    recentLocations = [];
+  } else {
+    recentLocations = recentLocations.split(`,`);
   }
+  console.log(recentLocations);
 }
-// Usage
-var lat = 51.48673532383122;
-var long = -3.1624860861007114;
+init();
+
+function stopMapUse() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function continueMapUse() {
+  document.getElementById("overlay").style.display = "none";
+}
 
 let pubObj = {};
-
-// getAnswerFromChatGPT(
-//   `Can you give me a list of good pubs at latitude ${lat} and longitude ${long} and a description of those pubs, separated by colons?`
-// )
-//   .then((answer) => {
-//     // Perform additional operations with the answer
-
-//     pubObj = parseText(answer);
-
-//     //PREFORM PAGE TRANSFORM
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error);
-//     // Handle the error appropriately
-//   });
 
 //Lat and longitude when clicked
 let clickedLat, clickedLng;
@@ -54,9 +48,8 @@ function getClickedLocation(mapsMouseEvent) {
           if (addressResult.address_components) {
             addressResult.address_components.forEach((component) => {
               if (component.types.includes("locality")) {
-                console.log("Found Locality");
                 locationName = component.long_name;
-                console.log(component);
+                storeSearch(locationName);
                 findResults([clickedLat, clickedLng], locationName);
               }
             });
@@ -71,6 +64,7 @@ function findResults([lat, lng], locationName) {
   const point = new google.maps.LatLng(lat, lng);
   removeMarkersOnMap();
   clearOutPlaceSection();
+  stopMapUse();
   marker = map_create_marker(point, locationName, false);
   let pubObj;
 
@@ -80,7 +74,7 @@ function findResults([lat, lng], locationName) {
     .then((answer) => {
       // Perform additional operations with the answer
       pubObj = parseText(answer);
-
+      continueMapUse();
       pubObj.pubNames.forEach(function (pubName, index) {
         const request = {
           query: `${pubName}, ${locationName}`,
@@ -114,4 +108,29 @@ function findLocationByAddress(place) {
 function clearOutPlaceSection() {
   const placesContainer = document.querySelector(`.places`);
   placesContainer.innerHTML = "";
+}
+
+function showRecentSearchs() {
+  recentSearch.innerHTML = "";
+  for (const location of recentLocation) {
+    console.log(location);
+    const html = `<li>${location}</li>`;
+    recentSearch.insertAdjacentHTML(`beforeend`, html);
+  }
+}
+
+function storeSearch(locationName) {
+  if (recentLocation.includes(locationName)) {
+    const recentSearch = recentLocation.splice(
+      recentLocation.indexOf(locationName),
+      1
+    );
+    recentLocation.unshift(...recentSearch);
+  } else {
+    recentLocation.unshift(locationName);
+  }
+  console.log("THIS IS THE RECENT SEARCH", locationName);
+  console.log(recentLocation);
+  localStorage.setItem(`recentLocations`, JSON.stringify(recentLocation));
+  showRecentSearchs();
 }
