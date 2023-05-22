@@ -83,8 +83,6 @@ async function initMap() {
 
   //Gets the lat and Long from a click event
   gMap.addListener("click", getClickedLocation);
-
-  ////
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
