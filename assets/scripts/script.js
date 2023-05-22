@@ -2,13 +2,13 @@ const recentSearch = document.querySelector(`#recentPlaces`);
 let recentLocation = [];
 
 function init() {
-  recentLocations = localStorage.getItem(`recentLocations`);
+  console.log(`INIT START`);
+  recentLocations = JSON.parse(localStorage.getItem(`recentLocations`));
   if (!recentLocations) {
     recentLocations = [];
-  } else {
-    recentLocations = recentLocations.split(`,`);
   }
-  console.log(recentLocations);
+
+  showRecentSearchs();
 }
 init();
 
@@ -112,7 +112,7 @@ function clearOutPlaceSection() {
 
 function showRecentSearchs() {
   recentSearch.innerHTML = "";
-  for (const location of recentLocation) {
+  for (const location of recentLocations) {
     console.log(location);
     const html = `<li>${location}</li>`;
     recentSearch.insertAdjacentHTML(`beforeend`, html);
@@ -120,17 +120,17 @@ function showRecentSearchs() {
 }
 
 function storeSearch(locationName) {
-  if (recentLocation.includes(locationName)) {
+  if (recentLocations.includes(locationName)) {
     const recentSearch = recentLocation.splice(
-      recentLocation.indexOf(locationName),
+      recentLocations.indexOf(locationName),
       1
     );
-    recentLocation.unshift(...recentSearch);
+    recentLocations.unshift(...recentSearch);
   } else {
-    recentLocation.unshift(locationName);
+    recentLocations.unshift(locationName);
   }
   console.log("THIS IS THE RECENT SEARCH", locationName);
-  console.log(recentLocation);
-  localStorage.setItem(`recentLocations`, JSON.stringify(recentLocation));
+  console.log(recentLocations);
+  localStorage.setItem(`recentLocations`, JSON.stringify(recentLocations));
   showRecentSearchs();
 }

@@ -126,4 +126,10 @@ ul {
 
 li {
   list-style-type: none;
+  margin: 10px;
+}
+
+li:hover {
+  color: grey;
+  cursor: pointer;
 }
