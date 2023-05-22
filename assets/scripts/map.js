@@ -3,9 +3,6 @@ let geocoder;
 let infowindow;
 let gMap;
 
-//Lat and longitude when clicked
-let clickedLat, clickedLng;
-
 // let map_icon_green,
 //   map_icon_blue,
 //   map_icon_red,
@@ -53,6 +50,8 @@ let clickedLat, clickedLng;
 
 async function initMap() {
   // The map, centered at Uluru
+  new google.maps.places.Autocomplete(document.getElementById(`location`));
+
   gMap = await new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
     center: {
@@ -61,6 +60,7 @@ async function initMap() {
     },
   });
 
+  gecoder = new google.maps.Geocoder();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -82,100 +82,18 @@ async function initMap() {
   // Configure the click listener.
 
   //Gets the lat and Long from a click event
-  gMap.addListener("click", (mapsMouseEvent) => {
-    const latlon = mapsMouseEvent.latLng.toJSON();
-    clickedLat = latlon.lat;
-    clickedLng = latlon.lng;
-
-    console.log(clickedLat, clickedLng);
-
-    const point = new google.maps.LatLng(clickedLat, clickedLng);
-
-    marker = map_create_marker(point, `Hello`);
-  });
+  gMap.addListener("click", getClickedLocation);
 }
-
-initMap();
-window.initMap = initMap;
-// initMarkers();
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   console.log(`Hasn't got access to users location`);
 }
 
-function lookupLocation(location) {
-  var requestOptions = {
-    method: "GET",
-    mode: "no-cors",
-  };
-  fetch(
-    `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${location}&types=establishment&location=37.76999%2C-122.44696&radius=500&key=A${key}`
-  )
-    .then((response) => response.json())
-    .then((result) => getPlaceId(result));
-}
-
-function findMultipleLocations() {
-  locations = [`5,2`, `7,3`];
-  locations.forEach(function (latlng) {
-    findLocationByLatLng(latlng);
-  });
-}
-
-//FINDS LOCATION BY ADDRESS NAME
-function findLocationByAddress(place) {
-  fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
-  )
-    .then((response) => response.json())
-    .then(function (result) {
-      if (!(result.status === "OK")) return;
-      console.log(result.results[0].geometry.location);
-      const markerOptions = new google.maps.Marker({
-        clickable: true,
-        flat: true,
-        map: gMap,
-        position: result.results[0].geometry.location,
-        title: "You are here",
-        visible: true,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-        },
-      });
-      gMap.setCenter(result.results[0].geometry.location);
-      gMap.setZoom(13);
-    });
-}
-
-//FINDS LOCATION BY LATITUDE AND LONGITUDE
-function findLocationByLatLng(latlng) {
-  fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${key}`
-  )
-    .then((response) => response.json())
-    .then(function (result) {
-      if (!(result.status === "OK")) return;
-      gMap = new google.maps.Map(document.getElementById("map"));
-      console.log(result.results[0].geometry.location);
-      const markerOptions = new google.maps.Marker({
-        clickable: true,
-        flat: true,
-        map: gMap,
-        position: result.results[0].geometry.location,
-        title: "You are here",
-        visible: true,
-        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-      });
-      gMap.setCenter(result.results[0].geometry.location);
-      gMap.setZoom(13);
-    });
-}
-
 //EVENT HANDLER
 
-const searchBtn = document.querySelector(`#searchBtn`);
-searchBtn.addEventListener(`click`, function () {
+const searchForm = document.querySelector(`#search-section`);
+searchForm.addEventListener(`submit`, function (e) {
+  e.preventDefault();
   console.log(`hello`);
   const inputSection = document.querySelector(`input`);
   const text = inputSection.value;
@@ -184,11 +102,23 @@ searchBtn.addEventListener(`click`, function () {
   findLocationByAddress(text);
 });
 
-function map_create_marker(point, html) {
-  const marker = new google.maps.Marker({
-    position: point,
-    map: gMap,
-  });
+function map_create_marker(point, html, isPub = true) {
+  let marker;
+  if (!isPub) {
+    marker = new google.maps.Marker({
+      position: point,
+      map: gMap,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 5,
+      },
+    });
+  } else {
+    marker = new google.maps.Marker({
+      position: point,
+      map: gMap,
+    });
+  }
 
   if (html != "") {
     const infowindow = new google.maps.InfoWindow({
@@ -199,4 +129,24 @@ function map_create_marker(point, html) {
     });
   }
   return marker;
+}
+
+initMap();
+window.initMap = initMap;
+// initMarkers();
+
+async function findPlace(request, pubName) {
+  const service = new google.maps.places.PlacesService(gMap);
+
+  service.findPlaceFromQuery(request, function (results, status) {
+    console.log(results);
+
+    const imgURL = results[0].photos[0].getUrl();
+    const lat = results[0].geometry.location.lat();
+    const lng = results[0].geometry.location.lng();
+    const position = new google.maps.LatLng(lat, lng);
+    map_create_marker(position, pubName, true);
+    console.log(lat, lng);
+    console.log(imgURL);
+  });
 }
