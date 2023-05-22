@@ -160,6 +160,7 @@ async function findPlace(request, pubName) {
 }
 
 function createCards(imgURL, pubName, description) {
+  console.log(description);
   const html = `<div class="card">
       <img src="${imgURL}">
       <div class="container">
@@ -167,7 +168,6 @@ function createCards(imgURL, pubName, description) {
         <p>${description}</p>
       </div>
     </div>`;
-
   const aside = document.querySelector(`aside`);
 
   aside.insertAdjacentHTML(`afterbegin`, html);
