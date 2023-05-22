@@ -70,14 +70,14 @@ function findResults([lat, lng], locationName) {
     .then((answer) => {
       // Perform additional operations with the answer
       pubObj = parseText(answer);
-
-      pubObj.pubNames.forEach(function (pubName) {
+      console.log(pubObj);
+      pubObj.pubNames.forEach(function (pubName, index) {
         const request = {
           query: pubName,
           fields: ["name", "geometry", "formatted_address", "photos"],
         };
 
-        findPlace(request, pubName);
+        findPlace(request, pubName, pubObj.descriptions[index]);
       });
       //PREFORM PAGE TRANSFORM
     })
