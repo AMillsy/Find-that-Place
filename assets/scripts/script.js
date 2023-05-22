@@ -69,7 +69,8 @@ function getClickedLocation(mapsMouseEvent) {
 
 function findResults([lat, lng], locationName) {
   const point = new google.maps.LatLng(lat, lng);
-
+  removeMarkersOnMap();
+  clearOutPlaceSection();
   marker = map_create_marker(point, locationName, false);
   let pubObj;
 
@@ -108,4 +109,9 @@ function findLocationByAddress(place) {
       gMap.setCenter(point);
       gMap.setZoom(13);
     });
+}
+
+function clearOutPlaceSection() {
+  const placesContainer = document.querySelector(`.places`);
+  placesContainer.innerHTML = "";
 }

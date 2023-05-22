@@ -103,6 +103,7 @@ ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
 }
 .place-image-container {
   max-width: 100%;

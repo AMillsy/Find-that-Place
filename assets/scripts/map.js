@@ -3,6 +3,7 @@ let geocoder;
 let infowindow;
 let gMap;
 
+let markers = [];
 // let map_icon_green,
 //   map_icon_blue,
 //   map_icon_red,
@@ -102,7 +103,7 @@ searchForm.addEventListener(`submit`, function (e) {
   findLocationByAddress(text);
 });
 
-function map_create_marker(point, html, isPub = true) {
+function map_create_marker(point, html, isPub = true, mapIcon) {
   let marker;
   if (!isPub) {
     marker = new google.maps.Marker({
@@ -114,9 +115,17 @@ function map_create_marker(point, html, isPub = true) {
       },
     });
   } else {
+    const icon = {
+      url: mapIcon, // url
+      scaledSize: new google.maps.Size(30, 30), // scaled size
+      origin: new google.maps.Point(0, 0), // origin
+      anchor: new google.maps.Point(0, 0), // anchor
+    };
+
     marker = new google.maps.Marker({
       position: point,
       map: gMap,
+      icon: icon,
     });
   }
 
@@ -128,6 +137,7 @@ function map_create_marker(point, html, isPub = true) {
       infowindow.open(map, marker);
     });
   }
+  markers.push(marker);
   return marker;
 }
 
@@ -139,7 +149,7 @@ async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
-    console.log(results[0].icon);
+    const icon = results[0].icon;
     let photos;
     let imgURL;
     if (results) {
@@ -151,7 +161,7 @@ async function findPlace(request, pubName, description) {
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
-    map_create_marker(position, pubName, true);
+    map_create_marker(position, pubName, true, icon);
     console.log(imgURL);
     createCards(imgURL, pubName, description);
   });
@@ -171,4 +181,15 @@ function createCards(imgURL, pubName, description) {
   const placesContainer = document.querySelector(`.places`);
 
   placesContainer.insertAdjacentHTML(`afterbegin`, html);
+}
+
+function setMarkersOntoMap(gMap) {
+  for (const marker of markers) {
+    marker.setMap(gMap);
+  }
+}
+
+function removeMarkersOnMap() {
+  setMarkersOntoMap(null);
+  markers = [];
 }
