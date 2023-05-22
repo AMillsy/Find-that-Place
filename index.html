@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/css/reset.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr-Av0kS8QAYgzV2dOHJXomDn8rxTcsRA&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCr-Av0kS8QAYgzV2dOHJXomDn8rxTcsRA&callback=initMap&v=weekly"
       type="text/javascript"
     ></script>
   </head>
@@ -18,11 +18,7 @@
         <header>
           <h1>UNLEASHED</h1>
         </header>
-        <div id="overlay" onclick="off()">
-          <div id="overlay-text" >Loading...</div>
-        </div>
-          <button onclick="on()">Turn on overlay effect</button>
-        </div>
+        <form action="search" id="search-section">
         <div class="search-bar">
           <input
             type="text"
@@ -31,18 +27,24 @@
           />
           <button class="" id="searchBtn">Search</button>
         </div>
+         </form>
         <h2>PUBS</h2>
         <ul id="pubs">
           <!--  List for example of how it will look -->
           <ul class>
             Pub 1: Wetherspoons
-            <button>:white_tick:</button>
+            <button>✅</button>
           </ul>
           <ul class>
             Pub 2: Wetherspoons
-            <button>:white_tick:</button>
+            <button>✅</button>
           </ul>
         </ul>
+        <div id="overlay" onclick="off()">
+          <div id="overlay-text" >Loading...</div>
+        </div>
+          <button onclick="on()">Turn on overlay effect</button>
+        </div>
       </aside>
       <div id="map"></div>
     </main>
