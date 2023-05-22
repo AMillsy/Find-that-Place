@@ -1,3 +1,12 @@
+  function hidemap(){
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+          }
+          
+          function off() {
+            document.getElementById("overlay").style.display = "none";
+          }
+        }
 // Usage
 var lat = 51.48673532383122;
 var long = -3.1624860861007114;
