@@ -85,7 +85,6 @@ function findResults([lat, lng], locationName) {
           query: `${pubName}, ${locationName}`,
           fields: ["name", "geometry", "formatted_address", "photos"],
         };
-        console.log(pubObj.descriptions[index]);
         findPlace(request, pubName, pubObj.descriptions[index]);
       });
       //PREFORM PAGE TRANSFORM
