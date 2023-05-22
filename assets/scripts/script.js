@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-async function getAnswerFromChatGPT(question) {
-    const response = await fetch('https://api.openai.com/v1/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
-        },
-
-    })}
-
-
-
-    
+  function hidemap(){
         function on() {
             document.getElementById("overlay").style.display = "block";
           }
@@ -19,7 +6,7 @@ async function getAnswerFromChatGPT(question) {
           function off() {
             document.getElementById("overlay").style.display = "none";
           }
-=======
+        }
 // Usage
 var lat = 51.48673532383122;
 var long = -3.1624860861007114;
@@ -104,4 +91,3 @@ function getClickedLocation(mapsMouseEvent) {
       // Handle the error appropriately
     });
 }
->>>>>>> 9aa0c9b122431b74697c948300f463921b327013
