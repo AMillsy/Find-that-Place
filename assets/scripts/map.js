@@ -140,35 +140,13 @@ async function findPlace(request, pubName) {
 
   service.findPlaceFromQuery(request, function (results, status) {
     console.log(results);
-    let photos;
-    let imgURL;
-    if (results) {
-      photos = results[0]?.photos;
-      if (photos) {
-        imgURL = photos[0].getUrl();
-      }
-    }
 
-    console.log(imgURL);
+    const imgURL = results[0].photos[0].getUrl();
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
     map_create_marker(position, pubName, true);
-
-    createCards(imgURL, pubName);
+    console.log(lat, lng);
+    console.log(imgURL);
   });
-}
-
-function createCards(imgURL, pubName, description) {
-  const html = `<div class="card">
-      <img src="${imgURL}">
-      <div class="container">
-        <h3>${pubName}</h3>
-        <p>${description}</p>
-      </div>
-    </div>`;
-
-  const aside = document.querySelector(`aside`);
-
-  aside.insertAdjacentHTML(`afterbegin`, html);
 }
