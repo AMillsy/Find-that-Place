@@ -139,7 +139,7 @@ async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
-    console.log(results);
+    console.log(results[0].icon);
     let photos;
     let imgURL;
     if (results) {
@@ -148,13 +148,11 @@ async function findPlace(request, pubName, description) {
         imgURL = photos[0].getUrl();
       }
     }
-
-    console.log(imgURL);
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
     map_create_marker(position, pubName, true);
-
+    console.log(imgURL);
     createCards(imgURL, pubName, description);
   });
 }
@@ -162,13 +160,15 @@ async function findPlace(request, pubName, description) {
 function createCards(imgURL, pubName, description) {
   console.log(description);
   const html = `<div class="card">
-      <img src="${imgURL}">
-      <div class="container">
-        <h3>${pubName}</h3>
-        <p>${description}</p>
-      </div>
-    </div>`;
-  const aside = document.querySelector(`aside`);
+        <div class="text-container">
+          <h2>${pubName}</h2>
+          <p>${description}</p>
+        </div>
+        <div class="place-image-container">
+        <img class="place-image"src="${imgURL}" alt="" srcset="">
+        </div>
+      </div>`;
+  const placesContainer = document.querySelector(`.places`);
 
-  aside.insertAdjacentHTML(`afterbegin`, html);
+  placesContainer.insertAdjacentHTML(`afterbegin`, html);
 }

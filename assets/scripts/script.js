@@ -83,7 +83,7 @@ function findResults([lat, lng], locationName) {
       pubObj.pubNames.forEach(function (pubName, index) {
         const request = {
           query: `${pubName}, ${locationName}`,
-          fields: ["name", "geometry", "formatted_address", "photos"],
+          fields: ["name", "geometry", "formatted_address", "photos", "icon"],
         };
         findPlace(request, pubName, pubObj.descriptions[index]);
       });
