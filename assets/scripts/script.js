@@ -1,12 +1,12 @@
-  function hidemap(){
-        function on() {
-            document.getElementById("overlay").style.display = "block";
-          }
-          
-          function off() {
-            document.getElementById("overlay").style.display = "none";
-          }
-        }
+function hidemap() {
+  function on() {
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  function off() {
+    document.getElementById("overlay").style.display = "none";
+  }
+}
 // Usage
 var lat = 51.48673532383122;
 var long = -3.1624860861007114;
@@ -80,9 +80,11 @@ function findResults([lat, lng], locationName) {
       // Perform additional operations with the answer
       pubObj = parseText(answer);
       console.log(pubObj);
+
       pubObj.pubNames.forEach(function (pubName, index) {
+        console.log(pubName, locationName);
         const request = {
-          query: pubName,
+          query: `${pubName}, ${locationName}`,
           fields: ["name", "geometry", "formatted_address", "photos"],
         };
 
@@ -93,5 +95,20 @@ function findResults([lat, lng], locationName) {
     .catch((error) => {
       console.error("Error:", error);
       // Handle the error appropriately
+    });
+}
+
+function findLocationByAddress(place) {
+  fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
+  )
+    .then((response) => response.json())
+    .then(function (result) {
+      console.log(result.results[0].geometry.location);
+      const { lat, lng } = result.results[0].geometry.location;
+
+      const point = new google.maps.LatLng(lat, lng);
+      gMap.setCenter(point);
+      gMap.setZoom(13);
     });
 }
