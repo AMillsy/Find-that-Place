@@ -140,8 +140,16 @@ async function findPlace(request, pubName) {
 
   service.findPlaceFromQuery(request, function (results, status) {
     console.log(results);
+    let photos;
+    let imgURL;
+    if (results) {
+      photos = results[0]?.photos;
+      if (photos) {
+        imgURL = photos[0].getUrl();
+      }
+    }
 
-    const imgURL = results[0]?.photos[0]?.getUrl();
+    console.log(imgURL);
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);

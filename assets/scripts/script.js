@@ -80,9 +80,11 @@ function findResults([lat, lng], locationName) {
       // Perform additional operations with the answer
       pubObj = parseText(answer);
       console.log(pubObj);
+
       pubObj.pubNames.forEach(function (pubName, index) {
+        console.log(pubName, locationName);
         const request = {
-          query: pubName,
+          query: `${pubName}, ${locationName}`,
           fields: ["name", "geometry", "formatted_address", "photos"],
         };
 
