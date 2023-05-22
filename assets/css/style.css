@@ -29,6 +29,36 @@ aside {
   border-style: groove;
   border-width: 5px;
 }
+.card{
+  width: 200px;
+  height: 400px;
+  background-color: var(--vlight);
+  border-radius: 20px;
+  border-style: solid;
+}
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+#overlay-text{
+  font-size: 200%;
+  color: black;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 h2 {
   font-family: "Courier New", Courier, monospace;
 
