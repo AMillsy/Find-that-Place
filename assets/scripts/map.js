@@ -135,7 +135,7 @@ initMap();
 window.initMap = initMap;
 // initMarkers();
 
-async function findPlace(request, pubName) {
+async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
@@ -155,11 +155,12 @@ async function findPlace(request, pubName) {
     const position = new google.maps.LatLng(lat, lng);
     map_create_marker(position, pubName, true);
 
-    createCards(imgURL, pubName);
+    createCards(imgURL, pubName, description);
   });
 }
 
 function createCards(imgURL, pubName, description) {
+  console.log(description);
   const html = `<div class="card">
       <img src="${imgURL}">
       <div class="container">
@@ -167,7 +168,6 @@ function createCards(imgURL, pubName, description) {
         <p>${description}</p>
       </div>
     </div>`;
-
   const aside = document.querySelector(`aside`);
 
   aside.insertAdjacentHTML(`afterbegin`, html);
