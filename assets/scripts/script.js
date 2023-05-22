@@ -1,3 +1,12 @@
+  function hidemap(){
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+          }
+          
+          function off() {
+            document.getElementById("overlay").style.display = "none";
+          }
+        }
 // Usage
 var lat = 51.48673532383122;
 var long = -3.1624860861007114;
@@ -26,7 +35,7 @@ function getClickedLocation(mapsMouseEvent) {
   const latlon = mapsMouseEvent.latLng.toJSON();
   clickedLat = latlon.lat;
   clickedLng = latlon.lng;
-  let locationName;
+  let locationName = "";
   //GET AREA NAME WHEN CLICKING
   new google.maps.Geocoder().geocode(
     {
@@ -45,7 +54,10 @@ function getClickedLocation(mapsMouseEvent) {
           if (addressResult.address_components) {
             addressResult.address_components.forEach((component) => {
               if (component.types.includes("locality")) {
+                console.log("Found Locality");
                 locationName = component.long_name;
+                console.log(component);
+                findResults([clickedLat, clickedLng], locationName);
               }
             });
           }
@@ -53,27 +65,28 @@ function getClickedLocation(mapsMouseEvent) {
       }
     }
   );
+}
 
-  const point = new google.maps.LatLng(clickedLat, clickedLng);
+function findResults([lat, lng], locationName) {
+  const point = new google.maps.LatLng(lat, lng);
 
   marker = map_create_marker(point, locationName, false);
-
   let pubObj;
 
   getAnswerFromChatGPT(
-    `Can you give me a list of good pubs at latitude ${clickedLat} and longitude ${clickedLng} and a description of those pubs, separated by colons?`
+    `Can you give me a list of good pubs in ${locationName} and a description of those pubs, separated by colons?`
   )
     .then((answer) => {
       // Perform additional operations with the answer
       pubObj = parseText(answer);
-
-      pubObj.pubNames.forEach(function (pubName) {
+      console.log(pubObj);
+      pubObj.pubNames.forEach(function (pubName, index) {
         const request = {
           query: pubName,
           fields: ["name", "geometry", "formatted_address", "photos"],
         };
 
-        findPlace(request, pubName);
+        findPlace(request, pubName, pubObj.descriptions[index]);
       });
       //PREFORM PAGE TRANSFORM
     })
