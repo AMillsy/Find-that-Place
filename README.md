@@ -106,12 +106,8 @@ Enjoy using Unleashed to find and explore pubs in your area!
 
 ## Credits
 
-- Joseph Bedford
-- Adam Mills
-- Adam Smart
-- Jack Hickey
-- Tobenna Okafor
-
-```
-
-```
+- [Joseph Bedford](https://github.com/josephrbedford)
+- [Adam Mills](https://github.com/AMillsy)
+- [Adam Smart](https://github.com/Adam-Smart)
+- [Jack Hickey](https://github.com/ThinkPad2023)
+- [Tobenna Okafor](https://github.com/tobzman)
