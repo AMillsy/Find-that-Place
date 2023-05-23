@@ -148,6 +148,7 @@ async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
+    const name = results[0].name;
     const icon = results[0].icon;
     let photos;
     let imgURL;
@@ -160,14 +161,15 @@ async function findPlace(request, pubName, description) {
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
-    map_create_marker(position, pubName, true, icon);
+    map_create_marker(position, name, true, icon);
     console.log(imgURL);
-    createCards(imgURL, pubName, description);
+    createCards(imgURL, name, description);
   });
 }
 
 function createCards(imgURL, pubName, description) {
   console.log(description);
+  if (!pubName || !description) return;
   const html = `<div class="card">
         <div class="text-container">
           <h2>${pubName}</h2>
