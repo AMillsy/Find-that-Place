@@ -1,8 +1,10 @@
 # Unleashed Project
 
-# Code
+## GitPage
 
-This is the code for the Unleashed website. Unleashed is a web application that allows users to search for pubs in a specific location and view them on a map. Users can also interact with a chatbot powered by OpenAI's GPT-3.5 language model.
+[Website](https://amillsy.github.io/Unleashed/)
+
+_Can't be used because of the inability to publish API keys onto Github_
 
 ## Acceptance Criteria
 
@@ -27,6 +29,10 @@ As a user, I can tap on the pub marker on the map to view a summary of it’s in
 As a user, I can easily navigate back to the home screen or perform a new search with minimal effort.
 
 ```
+
+# Code
+
+This is the code for the Unleashed website. Unleashed is a web application that allows users to search for pubs in a specific location and view them on a map. Users can also interact with a chatbot powered by OpenAI's GPT-3.5 language model.
 
 ## How to Use
 
