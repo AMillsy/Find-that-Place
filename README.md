@@ -50,7 +50,7 @@ To use the Unleashed website, follow these steps:
 
 ![Location Shown on the google maps](./assets/images/PlacesOnMap.png)
 
-### 4. The list of places will be shown on the bottom of the page, and a map will be displayed on the right side. The map will be centered around the specified location, and markers will indicate the positions of the pubs.
+### 4. The list of places will be shown on the bottom of the page, and a map will be displayed on the right side. The map will be centered around the specified location, and markers will indicate the positions of the places.
 
 ![Places with information](./assets/images/PlacesWithInfo.png)
 
