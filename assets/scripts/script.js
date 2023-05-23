@@ -1,6 +1,6 @@
 const recentSearch = document.querySelector(`#recentPlaces`);
 const selectOptions = document.querySelector(`select`);
-let recentLocation = [];
+let recentLocations = [];
 let gMapCircle;
 function init() {
   console.log(`INIT START`);
@@ -143,7 +143,7 @@ function findLocationByAddress(place, searchFromRecent = false) {
             //PREFORM PAGE TRANSFORM
           })
           .catch((error) => {
-            console.error("Error:", error);
+            continueMapUse();
             // Handle the error appropriately
           });
       }
@@ -156,6 +156,8 @@ function clearOutPlaceSection() {
 }
 
 function showRecentSearchs() {
+  console.log(recentLocations);
+  if (!recentLocations.length) return;
   recentSearch.innerHTML = "";
   for (const location of recentLocations) {
     console.log(location);
@@ -166,7 +168,7 @@ function showRecentSearchs() {
 
 function storeSearch(locationName) {
   if (recentLocations.includes(locationName)) {
-    const recentSearch = recentLocation.splice(
+    const recentSearch = recentLocations.splice(
       recentLocations.indexOf(locationName),
       1
     );
