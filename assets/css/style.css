@@ -25,7 +25,7 @@ aside {
   height: 874px;
   width: fit-content;
   border-radius: 5px;
-  border-color:var(--vlight);
+  border-color: var(--vlight);
   border-style: groove;
   border-width: 5px;
 }
@@ -51,20 +51,18 @@ ul {
   display: none;
 }
 
-.card{
-  width: 200px;
-  height: 400px;
+.card {
+  text-align: center;
+  width: 20%;
+  height: auto;
   background-color: var(--vlight);
   border-radius: 20px;
   border-style: solid;
   border-color: #000;
+  margin: 10px;
 }
-.container{
+.container {
   background-color: white;
-}
-
-@media only screen and (max-width: 600px) {
- 
 }
 
 #overlay {
@@ -80,7 +78,7 @@ ul {
   z-index: 2;
   cursor: pointer;
 }
-#overlay-text{
+#overlay-text {
   font-size: 200%;
   color: black;
   margin: 0;
@@ -96,4 +94,56 @@ ul {
   width: 80vw;
   height: 95vh;
   border: black solid 2px;
+}
+
+.places {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.place-image-container {
+  max-width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.place-image {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+  overflow: hidden;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.text-container {
+  background-color: white;
+}
+
+li {
+  list-style-type: none;
+  margin: 10px;
+}
+
+li:hover {
+  color: grey;
+  cursor: pointer;
+}
+select {
+  background-color: var(--vdark);
+  color: white;
+  margin-bottom: 5px;
+}
+input {
+  background-color: var(--light);
+  color: white;
+}
+::placeholder {
+  color: #999;
+}
+@media only screen and (max-width: 780px) {
+  .card {
+    width: 40%;
+  }
 }

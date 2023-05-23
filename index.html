@@ -19,6 +19,12 @@
         <header>
           <h1>UNLEASHED</h1>
         </header>
+        <select>
+          <option value="pubs">Pubs</option>
+          <option value="Shops">Shops</option>
+          <option value="Resturants">Resturants</option>
+          <option value="dog parks">Parks</option>
+        </select>
         <form action="search" id="search-section">
         <div class="search-bar">
           <input
@@ -29,36 +35,23 @@
           <button class="" id="searchBtn">Search</button>
         </div>
          </form>
-        <h2>PUBS</h2>
-        <ul id="pubs">
-          <!--  List for example of how it will look -->
-          <ul class>
-            Pub 1: Wetherspoons
-            <button>✅</button>
-          </ul>
-          <ul class>
-            Pub 2: Wetherspoons
-            <button>✅</button>
-          </ul>
+        <h2>Recent Searchs</h2>
+        <ul id="recentPlaces">
+         <p>Click on the map to search</p>
+         <p>Look below to see information about the locations you have searched for</p>
         </ul>
         <div id="overlay" onclick="off()">
           <div id="overlay-text" >Loading...</div>
-        </div>
-          <button onclick="on()">Turn on overlay effect</button>
-        </div>
       </aside>
       <div id="map"></div>
     </main>
-    <div class="card">
-      <img src="">
-      <div class="container">
-        <h3>Pub Name</h3>
-        <p>Pub Info</p>
-      </div>
-    </div>
+    <section class="places">
+    </section>
     <script src="./assets/scripts/script.js"></script>
     <script src="./assets/scripts/keys.js"></script>
     <script src="./assets/scripts/chatGPT.js"></script>
     <script src="./assets/scripts/map.js"></script>
   </body>
 </html>
+
+<!--https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sAZose0nVUMxJu4y7uHzxz4naB5GzP3rC2Lni7lWl3NUDs6cLpnKpG4jh-wRnRspcL9zoVf1Ic-Bx8vC8HAZTIO00LLJYQFUJ6oDGAVXMg_0uqRhcnr2JFA-Os5Dx07il8YvxKnjeAbbDIBmlz730fGwUsT3WYScwk4ebQWT0RgqIno7wc5vc&3u3024&5m1&2e1&callback=none&key=AIzaSyCr-Av0kS8QAYgzV2dOHJXomDn8rxTcsRA&token=4043-->
