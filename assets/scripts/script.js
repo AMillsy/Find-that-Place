@@ -78,7 +78,7 @@ function findResults([lat, lng], locationName) {
   let pubObj;
 
   getAnswerFromChatGPT(
-    `Can you give me a list of good restaurants and pubs in ${locationName} and a description, separated by colons?`
+    `Can you give me a list of good pubs in ${locationName} and a description, separated by colons?`
   )
     .then((answer) => {
       // Perform additional operations with the answer
@@ -124,7 +124,7 @@ function findLocationByAddress(place, searchFromRecent = false) {
         stopMapUse();
         removeCircle();
         getAnswerFromChatGPT(
-          `Can you give me a list of good restaurants and pubs in ${place} and a description, separated by colons?`
+          `Can you give me a list of good pubs in ${place} and a description, separated by colons?`
         )
           .then((answer) => {
             // Perform additional operations with the answer
