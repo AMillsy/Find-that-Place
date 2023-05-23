@@ -3,6 +3,7 @@ let geocoder;
 let infowindow;
 let gMap;
 
+let markers = [];
 // let map_icon_green,
 //   map_icon_blue,
 //   map_icon_red,
@@ -94,7 +95,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 const searchForm = document.querySelector(`#search-section`);
 searchForm.addEventListener(`submit`, function (e) {
   e.preventDefault();
-  console.log(`hello`);
   const inputSection = document.querySelector(`input`);
   const text = inputSection.value;
   if (!text) return;
@@ -102,7 +102,7 @@ searchForm.addEventListener(`submit`, function (e) {
   findLocationByAddress(text);
 });
 
-function map_create_marker(point, html, isPub = true) {
+function map_create_marker(point, html, isPub = true, mapIcon) {
   let marker;
   if (!isPub) {
     marker = new google.maps.Marker({
@@ -114,9 +114,17 @@ function map_create_marker(point, html, isPub = true) {
       },
     });
   } else {
+    const icon = {
+      url: mapIcon, // url
+      scaledSize: new google.maps.Size(30, 30), // scaled size
+      origin: new google.maps.Point(0, 0), // origin
+      anchor: new google.maps.Point(0, 0), // anchor
+    };
+
     marker = new google.maps.Marker({
       position: point,
       map: gMap,
+      icon: icon,
     });
   }
 
@@ -128,6 +136,7 @@ function map_create_marker(point, html, isPub = true) {
       infowindow.open(map, marker);
     });
   }
+  markers.push(marker);
   return marker;
 }
 
@@ -135,18 +144,53 @@ initMap();
 window.initMap = initMap;
 // initMarkers();
 
-async function findPlace(request, pubName) {
+async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
-    console.log(results);
-
-    const imgURL = results[0].photos[0].getUrl();
+    const name = results[0].name;
+    const icon = results[0].icon;
+    let photos;
+    let imgURL;
+    if (results) {
+      photos = results[0]?.photos;
+      if (photos) {
+        imgURL = photos[0].getUrl();
+      }
+    }
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
-    map_create_marker(position, pubName, true);
-    console.log(lat, lng);
+    map_create_marker(position, name, true, icon);
     console.log(imgURL);
+    createCards(imgURL, name, description);
   });
+}
+
+function createCards(imgURL, pubName, description) {
+  console.log(description);
+  if (!pubName || !description) return;
+  const html = `<div class="card">
+        <div class="text-container">
+          <h2>${pubName}</h2>
+          <p>${description}</p>
+        </div>
+        <div class="place-image-container">
+        <img class="place-image"src="${imgURL}" alt="" srcset="">
+        </div>
+      </div>`;
+  const placesContainer = document.querySelector(`.places`);
+
+  placesContainer.insertAdjacentHTML(`afterbegin`, html);
+}
+
+function setMarkersOntoMap(gMap) {
+  for (const marker of markers) {
+    marker.setMap(gMap);
+  }
+}
+
+function removeMarkersOnMap() {
+  setMarkersOntoMap(null);
+  markers = [];
 }
