@@ -38,15 +38,23 @@ This is the code for the Unleashed website. Unleashed is a web application that 
 
 To use the Unleashed website, follow these steps:
 
-1. Go to this [website](https://amillsy.github.io/Unleashed/)
+### 1. Go to this [website](https://amillsy.github.io/Unleashed/)
 
-2. Enter a location in the search input field and click the "Search" button. This will display the map into the location.
+![Website Hompage](./assets/images/websiteHomepage.png)
 
-3. Click on the map, and then ChatGPT will be called to show the best pubs, shops, parks in that area.
+### 2. Enter a location in the search input field and click the "Search" button. This will display the map into the location.
 
-4. The list of places will be shown on the bottom of the page, and a map will be displayed on the right side. The map will be centered around the specified location, and markers will indicate the positions of the pubs.
+![Location Search](./assets/images/SearchLocation.png)
 
-5. Click on a places name on the map to view more information about the place.
+### 3. Click on the map, and then ChatGPT will be called to show the best pubs, shops, parks in that area.
+
+![Location Shown on the google maps](./assets/images/PlacesOnMap.png)
+
+### 4. The list of places will be shown on the bottom of the page, and a map will be displayed on the right side. The map will be centered around the specified location, and markers will indicate the positions of the pubs.
+
+![Places with information](./assets/images/PlacesWithInfo.png)
+
+### 5. Click on a places name on the map to view more information about the place.
 
 ## Dependencies
 
