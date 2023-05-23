@@ -1,4 +1,5 @@
 const recentSearch = document.querySelector(`#recentPlaces`);
+const selectOptions = document.querySelector(`select`);
 let recentLocation = [];
 let gMapCircle;
 function init() {
@@ -70,15 +71,13 @@ function findResults([lat, lng], locationName) {
   });
 
   gMapCircle = circle;
-  removeMarkersOnMap();
-  clearOutPlaceSection();
-  stopMapUse();
-  removeCircle();
+  resetSearch();
   marker = map_create_marker(point, locationName, false);
   let pubObj;
 
+  console.log(selectOptions.value);
   getAnswerFromChatGPT(
-    `Can you give me a list of good pubs in ${locationName} and a description, separated by colons?`
+    `Can you give me a list of good ${selectOptions.value} in ${locationName} and a description, separated by colons?`
   )
     .then((answer) => {
       // Perform additional operations with the answer
@@ -119,12 +118,9 @@ function findLocationByAddress(place, searchFromRecent = false) {
         });
 
         gMapCircle = circle;
-        removeMarkersOnMap();
-        clearOutPlaceSection();
-        stopMapUse();
-        removeCircle();
+        resetSearch();
         getAnswerFromChatGPT(
-          `Can you give me a list of good pubs in ${place} and a description, separated by colons?`
+          `Can you give me a list of good ${selectOptions.value} in ${place} and a description, separated by colons?`
         )
           .then((answer) => {
             // Perform additional operations with the answer
@@ -195,4 +191,11 @@ function removeCircle() {
   console.log(gMapCircle);
   gMapCircle.setMap(null);
   gMapCircle = null;
+}
+
+function resetSearch() {
+  removeMarkersOnMap();
+  clearOutPlaceSection();
+  stopMapUse();
+  removeCircle();
 }
