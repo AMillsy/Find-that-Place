@@ -146,7 +146,8 @@ async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
-    if (!results[0]) return;
+    if (status === "OK") return;
+    if (!results) return;
     const name = results[0].name;
     const icon = results[0].icon;
     let photos;
