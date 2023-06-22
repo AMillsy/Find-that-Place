@@ -86,6 +86,8 @@ async function initMap() {
   gMap.addListener("click", getClickedLocation);
 }
 
+window.initMap = initMap;
+
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {}
 
 //EVENT HANDLER
@@ -138,14 +140,13 @@ function map_create_marker(point, html, isPub = true, mapIcon) {
   return marker;
 }
 
-initMap();
-window.initMap = initMap;
 // initMarkers();
 
 async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
 
   service.findPlaceFromQuery(request, function (results, status) {
+    if (!results[0]) return;
     const name = results[0].name;
     const icon = results[0].icon;
     let photos;
