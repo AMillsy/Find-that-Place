@@ -2,7 +2,7 @@
 
 ## GitPage
 
-[Website](https://amillsy.github.io/Unleashed/)
+[Website](https://amillsy.github.io/Find-that-Place/)
 
 _Can't be used because of the inability to publish API keys onto Github_
 
@@ -32,13 +32,13 @@ As a user, I can easily navigate back to the home screen or perform a new search
 
 # Code
 
-This is the code for the Unleashed website. Unleashed is a web application that allows users to search for pubs in a specific location and view them on a map. Users can also interact with a chatbot powered by OpenAI's GPT-3.5 language model.
+This is the code for the Find that place website. Find that place is a web application that allows users to search for pubs in a specific location and view them on a map. Users can also interact with a chatbot powered by OpenAI's GPT-3.5 language model.
 
 ## How to Use
 
-To use the Unleashed website, follow these steps:
+To use the Find that place website, follow these steps:
 
-### 1. Go to this [website](https://amillsy.github.io/Unleashed/)
+### 1. Go to this [website](https://amillsy.github.io/Find-that-Place/)
 
 ![Website Hompage](./assets/images/websiteHomepage.png)
 
@@ -58,7 +58,7 @@ To use the Unleashed website, follow these steps:
 
 ## Dependencies
 
-The Unleashed website has the following dependencies:
+The Find that place website has the following dependencies:
 
 - [Google Maps API](https://developers.google.com/maps/documentation/javascript/overview): The website uses the Google Maps JavaScript API to display the map and place markers on it.
 
@@ -102,7 +102,7 @@ The website has custom styles defined in the `style.css` file. These styles defi
 
 Please make sure to provide the necessary API keys in the `keys.js` file for the website to function correctly. You will need a Google Maps API key and an OpenAI API key.
 
-Enjoy using Unleashed to find and explore pubs in your area!
+Enjoy using Find that place to find and explore pubs in your area!
 
 ## Credits
 
