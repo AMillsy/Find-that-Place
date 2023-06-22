@@ -3,7 +3,6 @@ const selectOptions = document.querySelector(`select`);
 let recentLocations = [];
 let gMapCircle;
 function init() {
-  console.log(`INIT START`);
   recentLocations = JSON.parse(localStorage.getItem(`recentLocations`));
   if (!recentLocations) {
     recentLocations = [];
@@ -75,7 +74,6 @@ function findResults([lat, lng], locationName) {
   marker = map_create_marker(point, locationName, false);
   let pubObj;
 
-  console.log(selectOptions.value);
   getAnswerFromChatGPT(
     `Can you give me a list of good ${selectOptions.value} in ${locationName} and a description, separated by colons?`
   )
@@ -156,11 +154,9 @@ function clearOutPlaceSection() {
 }
 
 function showRecentSearchs() {
-  console.log(recentLocations);
   if (!recentLocations.length) return;
   recentSearch.innerHTML = "";
   for (const location of recentLocations) {
-    console.log(location);
     const html = `<li>${location}</li>`;
     recentSearch.insertAdjacentHTML(`beforeend`, html);
   }
@@ -176,8 +172,6 @@ function storeSearch(locationName) {
   } else {
     recentLocations.unshift(locationName);
   }
-  console.log("THIS IS THE RECENT SEARCH", locationName);
-  console.log(recentLocations);
   localStorage.setItem(`recentLocations`, JSON.stringify(recentLocations));
   showRecentSearchs();
 }
@@ -190,7 +184,6 @@ recentSearch.addEventListener(`click`, function (e) {
 
 function removeCircle() {
   if (!gMapCircle) return;
-  console.log(gMapCircle);
   gMapCircle.setMap(null);
   gMapCircle = null;
 }

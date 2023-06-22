@@ -86,9 +86,7 @@ async function initMap() {
   gMap.addListener("click", getClickedLocation);
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  console.log(`Hasn't got access to users location`);
-}
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {}
 
 //EVENT HANDLER
 
@@ -162,13 +160,11 @@ async function findPlace(request, pubName, description) {
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
     map_create_marker(position, name, true, icon);
-    console.log(imgURL);
     createCards(imgURL, name, description);
   });
 }
 
 function createCards(imgURL, pubName, description) {
-  console.log(description);
   if (!pubName || !description) return;
   const html = `<div class="card">
         <div class="text-container">
