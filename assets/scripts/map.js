@@ -2,7 +2,7 @@
 let geocoder;
 let infowindow;
 let gMap;
-
+let recentName;
 let markers = [];
 // let map_icon_green,
 //   map_icon_blue,
@@ -168,6 +168,8 @@ async function findPlace(request, pubName, description) {
 
 function createCards(imgURL, pubName, description) {
   if (!pubName || !description) return;
+  if (recentName === pubName) return;
+  recentName = pubName;
   const imgURLUsed = imgURL || `./assets/images/placeHolderImage.jpg`;
 
   const html = `<div class="card">

@@ -103,6 +103,7 @@ function findLocationByAddress(place, searchFromRecent = false) {
   )
     .then((response) => response.json())
     .then(function (result) {
+      if (!result.results[0].geometry) return;
       const { lat, lng } = result.results[0].geometry.location;
       const point = new google.maps.LatLng(lat, lng);
       gMap.setCenter(point);
