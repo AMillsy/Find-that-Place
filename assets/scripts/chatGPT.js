@@ -17,7 +17,6 @@ function getAnswerFromChatGPT(question) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.choices[0].text.trim());
       const answer = data.choices[0].text.trim();
       return answer;
     })
