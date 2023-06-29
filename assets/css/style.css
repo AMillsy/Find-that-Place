@@ -17,13 +17,18 @@ body {
 main {
   display: flex;
 }
+
+.topContainer {
+  display: flex;
+  width: 100%;
+}
 aside {
   color: white;
   margin-right: 20px;
   background-color: var(--mid);
   padding: 10px;
   height: 874px;
-  width: fit-content;
+  width: 20%;
   border-radius: 5px;
   border-color: var(--vlight);
   border-style: groove;
@@ -91,8 +96,8 @@ ul {
 
 #map {
   margin: 5px;
-  width: 80vw;
-  height: 95vh;
+  width: 75%;
+  height: 874px;
   border: black solid 2px;
 }
 
@@ -141,6 +146,36 @@ input {
 }
 ::placeholder {
   color: #999;
+}
+
+@media only screen and (max-width: 1000px) {
+  .topContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    display: inline;
+    position: relative;
+    padding: 10px;
+    width: 50%;
+    height: 100%;
+  }
+  aside {
+    margin: 10px;
+    position: relative;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+  #recentPlaces {
+    margin-right: 50px;
+    width: 40%;
+  }
+  #map {
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 780px) {
   .card {

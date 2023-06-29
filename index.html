@@ -12,10 +12,10 @@
   </head>
   <body>
     <main>
+      <div class="topContainer">
       <aside>
         <header>
           <h1>FIND THAT PLACE</h1>
-        </header>
         <select>
           <option value="pubs and resturants">Pubs</option>
           <option value="Shops">Shops</option>
@@ -31,15 +31,19 @@
           <button class="" id="searchBtn">Search</button>
         </div>
          </form>
+         </header>
+         <div class="recent-searches-container">
         <h2>Recent Searches</h2>
         <ul id="recentPlaces">
          <p>Click on the map to search</p>
          <p>Look below to see information about the locations you have searched for</p>
         </ul>
+        </div>
         <div id="overlay" onclick="off()">
           <div id="overlay-text" >Loading...</div>
       </aside>
       <div id="map"></div>
+      </div>
     </main>
     <section class="places">
     </section>
