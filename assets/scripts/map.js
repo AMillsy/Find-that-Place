@@ -144,9 +144,8 @@ function map_create_marker(point, html, isPub = true, mapIcon) {
 
 async function findPlace(request, pubName, description) {
   const service = new google.maps.places.PlacesService(gMap);
-
   service.findPlaceFromQuery(request, function (results, status) {
-    if (status === "OK") return;
+    if (status !== "OK") return;
     if (!results) return;
     const name = results[0].name;
     const icon = results[0].icon;
@@ -158,6 +157,7 @@ async function findPlace(request, pubName, description) {
         imgURL = photos[0].getUrl();
       }
     }
+
     const lat = results[0].geometry.location.lat();
     const lng = results[0].geometry.location.lng();
     const position = new google.maps.LatLng(lat, lng);
@@ -168,13 +168,15 @@ async function findPlace(request, pubName, description) {
 
 function createCards(imgURL, pubName, description) {
   if (!pubName || !description) return;
+  const imgURLUsed = imgURL || `./assets/images/placeHolderImage.jpg`;
+
   const html = `<div class="card">
         <div class="text-container">
           <h2>${pubName}</h2>
           <p>${description}</p>
         </div>
         <div class="place-image-container">
-        <img class="place-image"src="${imgURL}" alt="" srcset="">
+        <img class="place-image"src="${imgURLUsed}" alt="" srcset="">
         </div>
       </div>`;
   const placesContainer = document.querySelector(`.places`);

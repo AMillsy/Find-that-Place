@@ -3,7 +3,7 @@ function getAnswerFromChatGPT(question) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: apiKey,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: "text-davinci-003",
@@ -17,6 +17,7 @@ function getAnswerFromChatGPT(question) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data.choices[0].text.trim());
       const answer = data.choices[0].text.trim();
       return answer;
     })
@@ -27,19 +28,24 @@ function getAnswerFromChatGPT(question) {
 }
 
 function parseText(text) {
-  const textSections = text.split(`\n`);
-  const filteredAnswer = textSections.filter((word) => word != "");
-  const takeFrontSection = [];
   const description = [];
+  const placesName = [];
+
+  const textSections = text.split(`\n`);
+  const filteredAnswer = textSections.filter((sentence) => sentence != "");
+  const takeFrontSection = [];
+
   filteredAnswer.forEach(function (section) {
     takeFrontSection.push(section.split(`:`)[0]);
+
     description.push(section.split(`:`)[1]);
   });
 
-  const placesName = [];
-  takeFrontSection.forEach(function (listitem) {
-    placesName.push(listitem.split(`.`)[1]);
-  });
+  if (text.includes("1.")) {
+    takeFrontSection.forEach(function (listitem) {
+      placesName.push(listitem.split(`.`)[1]);
+    });
+  }
 
   return {
     pubNames: placesName,
